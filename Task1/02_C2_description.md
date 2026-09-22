@@ -1,7 +1,5 @@
-№ Перечень микросервисов
-41 minutes ago
+# Перечень микросервисов
 
-Create 02_C2_description
 | Микросервис | Назначение | Основные события |
 | --- | --- | --- |
 | Auth Service | Аутентификация покупателей и продавцов, роли доступа. | Не участвует в Saga оформления заказа. |
@@ -13,14 +11,11 @@ Create 02_C2_description
 | Inventory Service | Проверяет доступность товаров, резервирует и освобождает остатки. | `StockReserved`, `StockReservationFailed`, `StockReleased`, `StockLevelChanged`; consumes `OrderItemsValidated`, `PaymentFailed`, `RefundSucceeded`. |
 | Payment Service | Запускает оплату, хранит платежные попытки, работает с привязанными картами и возвратами. | `PaymentRequested`, `PaymentSucceeded`, `PaymentFailed`, `RefundSucceeded`, `RefundFailed`; consumes `StockReserved`, `DeliveryCreationFailed`. |
 | Delivery Service | Создает заявку на доставку, получает трек-номер и обновления от логистики. | `DeliveryCreated`, `DeliveryCreationFailed`, `ShipmentStatusChanged`; consumes `PaymentSucceeded`. |
-| Notification Service | Уведомляет покупателя о статусах и продавца о заказе, который нужно подготовить. | Consumes `OrderPaid`, `OrderReadyForDelivery`, `OrderCancelled`, `PaymentFailed`, `ShipmentStatusChanged`. |
-39 minutes ago
+| Notification Service | Уведомляет покупателя о статусах и продавца о заказе, который нужно подготовить. | Consumes `OrderPaid`, `OrderReadyForDelivery`, `OrderCancelled`, `PaymentFailed`, `ShipmentStatusChanged`. |39 minutes ago
 
-Update microservices description and key decisions
-Ключевые решения
-41 minutes ago
 
-Create 02_C2_description
+# Ключевые решения
+
 | Решение | Обоснование |
 | --- | --- |
 | Брокер событий как центральный транспорт | Несколько сервисов потребляют одни и те же события: например, `OrderReadyForDelivery` нужен заказам, продавцу и уведомлениям. Это упрощает подключение будущих сервисов рекомендаций, аналитики и антифрода. |
