@@ -1,3 +1,5 @@
+№ Перечень микросервисов
+
 | Микросервис | Назначение | Основные события |
 | --- | --- | --- |
 | Auth Service | Аутентификация покупателей и продавцов, роли доступа. | Не участвует в Saga оформления заказа. |
@@ -11,7 +13,7 @@
 | Delivery Service | Создает заявку на доставку, получает трек-номер и обновления от логистики. | `DeliveryCreated`, `DeliveryCreationFailed`, `ShipmentStatusChanged`; consumes `PaymentSucceeded`. |
 | Notification Service | Уведомляет покупателя о статусах и продавца о заказе, который нужно подготовить. | Consumes `OrderPaid`, `OrderReadyForDelivery`, `OrderCancelled`, `PaymentFailed`, `ShipmentStatusChanged`. |
 
-## Ключевые решения
+Ключевые решения
 
 | Решение | Обоснование |
 | --- | --- |
