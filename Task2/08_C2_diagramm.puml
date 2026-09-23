@@ -1,1 +1,61 @@
+@startuml NovaMarket_Containers
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
+title NovaMarket. Updated container diagram
+
+Person(buyer, "Покупатель", "Просматривает каталог, оформляет заказы, смотрит историю покупок")
+Person(seller, "Продавец", "Получает оплаченные заказы и отслеживает подготовку")
+
+System_Ext(paymentGateway, "Платежный шлюз", "Списание, возврат и фискальный чек")
+System_Ext(logisticsProvider, "Логистический провайдер", "Заявки на доставку, трек-номер и статусы")
+
+System_Boundary(novaMarket, "NovaMarket") {
+  Container(orderHistoryService, "Order History Query Service", "Service + Read DB", "Денормализованная история покупок для быстрых экранов чтения")
+  Container(authService, "Auth Service", "Service + DB", "Пользователи, продавцы, роли")
+  Container(apiGateway, "API Gateway", "NGINX", "TLS, маршрутизация REST API, rate limit")
+  Container(inventoryService, "Inventory Service", "Service + DB", "Остатки, резервы, снятие резерва")
+  Container(notificationService, "Notification Service", "Push/email/SMS-уведомления")
+  Container(catalogService, "Catalog Service", "Service + DB", "Карточки товаров, цены, фото, категории")
+  Container(eventBroker, "Event Broker", "Kafka / RabbitMQ", "Доменные события, retry, DLQ")
+  Container(sellerCabinet, "Seller Cabinet", "Web UI", "Интерфейс продавца")
+  Container(deliveryService, "Delivery Service", "Service + DB", "Доставка, ETA, трек-номер, статусы отправления")
+  Container(cartService, "Cart Service", "Service + DB", "Корзина и команда повторного заказа")
+  Container(paymentService, "Payment Service", "Service + DB", "Платежи, привязанные карты, возвраты, чеки")
+  Container(orderService, "Order Service", "Service + DB", "Заказы, жизненный цикл заказа, события статусов")
+  Container(mobileApp, "Mobile App", "iOS / Android", "Покупательский клиент")
+  Container(reviewService, "Review Service", "Service + DB", "Отзывы, оценки и агрегированный рейтинг")
+  Container(sellerService, "Seller Service", "Service + DB", "Рабочий список заказов продавца")
+}
+
+Rel(eventBroker, inventoryService, "OrderItemsValidated, PaymentFailed, RefundSucceeded", "consume")
+Rel(apiGateway, reviewService, "Оставить отзыв", "REST")
+Rel(deliveryService, logisticsProvider, "Создать доставку и получить обновления", "HTTPS/API")
+Rel(eventBroker, orderHistoryService, "OrderCreated, OrderPaid, OrderReadyForDelivery, OrderCancelled, PaymentSucceeded, RefundSucceeded, ReceiptIssued, DeliveryCreated, ShipmentStatusChanged, ReviewCreated", "consume")
+Rel(orderService, eventBroker, "OrderCreated, OrderPaid, OrderReadyForDelivery, OrderCancelled", "publish")
+Rel(apiGateway, authService, "Проверка токенов и ролей", "REST")
+Rel(inventoryService, eventBroker, "StockReserved, StockReleased, StockReservationFailed", "publish")
+Rel(apiGateway, cartService, "Корзина и повторить заказ", "REST")
+Rel(apiGateway, orderService, "Оформление заказа и текущий статус", "REST")
+Rel(buyer, mobileApp, "Использует")
+Rel(eventBroker, notificationService, "OrderPaid, OrderReadyForDelivery, OrderCancelled, PaymentFailed, ShipmentStatusChanged", "consume")
+Rel(paymentService, eventBroker, "PaymentSucceeded, PaymentFailed, RefundSucceeded, ReceiptIssued", "publish")
+Rel(seller, sellerCabinet, "Использует")
+Rel(catalogService, eventBroker, "ProductUpdated, PriceChanged, OrderItemsValidated", "publish")
+Rel(apiGateway, sellerService, "Заказы продавца", "REST")
+Rel(eventBroker, orderService, "PaymentSucceeded, PaymentFailed, DeliveryCreated, DeliveryCreationFailed, RefundSucceeded, ShipmentStatusChanged", "consume")
+Rel(apiGateway, paymentService, "Скачать чек", "REST")
+Rel(eventBroker, paymentService, "StockReserved, DeliveryCreationFailed", "consume")
+Rel(eventBroker, catalogService, "StockLevelChanged, ProductRatingChanged", "consume")
+Rel(sellerCabinet, apiGateway, "Запросы продавца", "HTTPS/REST")
+Rel(paymentService, paymentGateway, "Списать, вернуть деньги, получить чек", "HTTPS/API")
+Rel(cartService, eventBroker, "CartChanged", "publish")
+Rel(deliveryService, eventBroker, "DeliveryCreated, DeliveryCreationFailed, ShipmentStatusChanged", "publish")
+Rel(mobileApp, apiGateway, "Команды и запросы покупателя", "HTTPS/REST")
+Rel(apiGateway, orderHistoryService, "История покупок и детали заказа", "REST")
+Rel(eventBroker, sellerService, "OrderReadyForDelivery, OrderCancelled, ShipmentStatusChanged", "consume")
+Rel(eventBroker, deliveryService, "PaymentSucceeded", "consume")
+Rel(apiGateway, catalogService, "Каталог и карточка товара", "REST")
+Rel(reviewService, eventBroker, "ReviewCreated, ProductRatingChanged", "publish")
+
+
+@enduml
