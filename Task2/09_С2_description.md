@@ -22,6 +22,8 @@
 | Допустимая задержка обновления | История является eventually consistent; после нового события read-модель обновляется асинхронно. |
 | Надежная доставка событий | Обработчики используют inbox/idempotency и сох
 
+---
+
 | Поле read-модели | Источник |
 | --- | --- |
 | `orderId`, `buyerId`, `createdAt`, `finalStatus` | `OrderCreated`, `OrderPaid`, `OrderCancelled`, `ShipmentStatusChanged` |
