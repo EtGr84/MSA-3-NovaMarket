@@ -10,7 +10,7 @@
 - [locustfile.py](locustfile.py) - сценарий нагрузки для Locust.
 - [logs](logs) - логи проверок, которые показывают изменение количества реплик под нагрузкой.
 
-Ключевые проверочные логи:
+Проверочные логи:
 
 - [logs/hpa-memory-before.log](logs/hpa-memory-before.log) - до нагрузки: `REPLICAS = 1`.
 - [logs/hpa-memory-scaled.log](logs/hpa-memory-scaled.log) - HPA по памяти: событие `SuccessfulRescale`, размер изменился до `2`.
