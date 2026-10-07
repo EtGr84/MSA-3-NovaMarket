@@ -1,6 +1,6 @@
-# Task3. Задание 3. Масштабирование приложение под нагрузку
+# Задание 3. Масштабирование приложение под нагрузку
 
-Список файлов:
+## Список файлов:
 
 - [deployment.yaml](deployment.yaml) - Deployment тестового приложения `ghcr.io/yandex-practicum/scaletestapp:latest` с одной стартовой репликой и лимитом памяти `30Mi`.
 - [service.yaml](service.yaml) - Service для доступа к приложению и scrape-аннотациями Prometheus.
@@ -10,7 +10,7 @@
 - [locustfile.py](locustfile.py) - сценарий нагрузки для Locust.
 - [logs](logs) - логи проверок, которые показывают изменение количества реплик под нагрузкой.
 
-Проверочные логи:
+## Проверочные логи:
 
 - [logs/hpa-memory-before.log](logs/hpa-memory-before.log) - до нагрузки: `REPLICAS = 1`.
 - [logs/hpa-memory-scaled.log](logs/hpa-memory-scaled.log) - HPA по памяти: событие `SuccessfulRescale`, размер изменился до `2`.
@@ -87,7 +87,7 @@ kubectl -n monitoring port-forward service/prometheus-server 9090:80
 sum(rate(http_requests_total{namespace="scaletest", pod!=""}[5m])) by (pod)
 ```
 
-Включение HPA по RPS:
+## Включение HPA по RPS:
 
 ```bash
 kubectl apply -f Task3/hpa-rps.yaml
@@ -95,7 +95,7 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/scaletest/pods
 kubectl -n scaletest get hpa scaletestapp-rps --watch
 ```
 
-Нагрузка:
+## Нагрузка:
 
 ```bash
 cd Task3
