@@ -1,0 +1,68 @@
+# Memory HPA scaled state
+2026-10-05T18:19:23Z
+NAME                  REFERENCE                 TARGETS           MINPODS   MAXPODS   REPLICAS   AGE
+scaletestapp-memory   Deployment/scaletestapp   memory: 59%/80%   1         10        2          8m31s
+Name:                                                     scaletestapp-memory
+Namespace:                                                scaletest
+Labels:                                                   <none>
+Annotations:                                              <none>
+CreationTimestamp:                                        Tue, 05 Oct 2026 21:10:52 +0300
+Reference:                                                Deployment/scaletestapp
+Metrics:                                                  ( current / target )
+  resource memory on pods  (as a percentage of request):  59% (12222Ki) / 80%
+Min replicas:                                             1
+Max replicas:                                             10
+Behavior:
+  Scale Up:
+    Stabilization Window: 0 seconds
+    Select Policy: Max
+    Policies:
+      - Type: Percent  Value: 100  Period: 30 seconds
+      - Type: Pods     Value: 4    Period: 30 seconds
+  Scale Down:
+    Stabilization Window: 180 seconds
+    Select Policy: Max
+    Policies:
+      - Type: Percent  Value: 50  Period: 60 seconds
+Deployment pods:       2 current / 2 desired
+Conditions:
+  Type            Status  Reason              Message
+  ----            ------  ------              -------
+  AbleToScale     True    ReadyForNewScale    recommended size matches current size
+  ScalingActive   True    ValidMetricFound    the HPA was able to successfully calculate a replica count from memory resource utilization (percentage of request)
+  ScalingLimited  False   DesiredWithinRange  the desired count is within the acceptable range
+Events:
+  Type     Reason                        Age                     From                       Message
+  ----     ------                        ----                    ----                       -------
+  Warning  FailedComputeMetricsReplicas  5m31s (x12 over 8m16s)  horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get memory resource metric value: failed to get memory utilization: unable to get metrics for resource memory: no metrics returned from resource metrics API
+  Warning  FailedGetResourceMetric       5m16s (x13 over 8m16s)  horizontal-pod-autoscaler  failed to get memory utilization: unable to get metrics for resource memory: no metrics returned from resource metrics API
+  Normal   SuccessfulRescale             76s                     horizontal-pod-autoscaler  New size: 2; reason: memory resource utilization (percentage of request) above target
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+scaletestapp   2/2     2            2           8m31s
+NAME                            READY   STATUS    RESTARTS      AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+scaletestapp-57f4f8b89f-5284x   1/1     Running   1 (67s ago)   4m38s   10.244.0.40   minikube   <none>           <none>
+scaletestapp-57f4f8b89f-mc9x5   1/1     Running   0             76s     10.244.0.41   minikube   <none>           <none>
+NAME                            CPU(cores)   MEMORY(bytes)   
+scaletestapp-57f4f8b89f-5284x   2m           11Mi            
+scaletestapp-57f4f8b89f-mc9x5   2m           11Mi            
+# Recent scale events
+4m30s       Warning   Failed                         pod/scaletestapp-95c54f696-fljls              Error: ImagePullBackOff
+5m31s       Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/scaletestapp-memory   invalid metrics (1 invalid out of 1), first error is: failed to get memory resource metric value: failed to get memory utilization: unable to get metrics for resource memory: no metrics returned from resource metrics API
+5m16s       Warning   FailedGetResourceMetric        horizontalpodautoscaler/scaletestapp-memory   failed to get memory utilization: unable to get metrics for resource memory: no metrics returned from resource metrics API
+4m38s       Normal    SuccessfulCreate               replicaset/scaletestapp-57f4f8b89f            Created pod: scaletestapp-57f4f8b89f-5284x
+4m38s       Normal    ScalingReplicaSet              deployment/scaletestapp                       Scaled up replica set scaletestapp-57f4f8b89f from 0 to 1
+4m37s       Normal    Scheduled                      pod/scaletestapp-57f4f8b89f-5284x             Successfully assigned scaletest/scaletestapp-57f4f8b89f-5284x to minikube
+4m37s       Normal    Pulling                        pod/scaletestapp-57f4f8b89f-5284x             Pulling image "ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71828952b90dee42a5b26b052e92793452"
+66s         Normal    Started                        pod/scaletestapp-57f4f8b89f-5284x             Container started
+4m33s       Normal    Pulled                         pod/scaletestapp-57f4f8b89f-5284x             Successfully pulled image "ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71828952b90dee42a5b26b052e92793452" in 4.216s (4.216s including waiting). Image size: 10812525 bytes.
+66s         Normal    Created                        pod/scaletestapp-57f4f8b89f-5284x             Container created
+4m21s       Normal    SuccessfulDelete               replicaset/scaletestapp-95c54f696             Deleted pod: scaletestapp-95c54f696-fljls
+4m21s       Normal    ScalingReplicaSet              deployment/scaletestapp                       Scaled down replica set scaletestapp-95c54f696 from 1 to 0
+76s         Normal    SuccessfulCreate               replicaset/scaletestapp-57f4f8b89f            Created pod: scaletestapp-57f4f8b89f-mc9x5
+76s         Normal    Created                        pod/scaletestapp-57f4f8b89f-mc9x5             Container created
+76s         Normal    Pulled                         pod/scaletestapp-57f4f8b89f-mc9x5             Container image "ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71828952b90dee42a5b26b052e92793452" already present on machine and can be accessed by the pod
+76s         Normal    SuccessfulRescale              horizontalpodautoscaler/scaletestapp-memory   New size: 2; reason: memory resource utilization (percentage of request) above target
+76s         Normal    Scheduled                      pod/scaletestapp-57f4f8b89f-mc9x5             Successfully assigned scaletest/scaletestapp-57f4f8b89f-mc9x5 to minikube
+76s         Normal    ScalingReplicaSet              deployment/scaletestapp                       Scaled up replica set scaletestapp-57f4f8b89f from 1 to 2
+75s         Normal    Started                        pod/scaletestapp-57f4f8b89f-mc9x5             Container started
+66s         Normal    Pulled                         pod/scaletestapp-57f4f8b89f-5284x             Container image "ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71828952b90dee42a5b26b052e92793452" already present on machine and can be accessed by the pod
