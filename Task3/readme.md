@@ -1,16 +1,4 @@
-# Задание 3. Масштабирование приложения под нагрузку
-
----
-
-Перечень файлов для третьего задания
-
-| Модуль             | Назначение |
-|--------------------|-----------|
-| deployment.yaml   | Обрабатывает создание бронирований. Выполняет все проверки: пользователя, отеля, промокода, отзывов. Вычисляет финальную цену, скидку, и сохраняет результат. |
-| `UserService`      | Проверяет статус пользователя: активен ли он, не находится ли в чёрном списке, и возвращает его статус. |
-| `HotelService`     | Предоставляет информацию об отелях. Используется для валидации бронирования и отображения информации в интерфейсе. |
-| `PromoCodeService` | Проверяет промокоды: действительность, применимость к конкретному пользователю. |
-| `ReviewService`    | Отвечает за отзывы и рейтинг отеля. Влияет на возможность бронирования, если у отеля плохая репутация. |
+# Task3. Autoscaling under load
 
 В этой директории лежат артефакты для третьего задания:
 
@@ -29,8 +17,6 @@
 - [logs/prometheus-metrics-after-fix.log](logs/prometheus-metrics-after-fix.log) - Prometheus target `up`, PromQL возвращает RPS, custom metric доступна через Kubernetes API.
 - [logs/hpa-rps-scaled.log](logs/hpa-rps-scaled.log) - HPA по RPS: событие `SuccessfulRescale`, размер изменился до `5`.
 - [logs/hpa-rps-final-10-replicas.log](logs/hpa-rps-final-10-replicas.log) - финальное состояние RPS-прогона: Deployment `10/10`, HPA дошел до максимума `10`.
-
-Примечание по локальной проверке: на Apple Silicon учебный образ `ghcr.io/yandex-practicum/scaletestapp:latest` не имеет `linux/arm64` manifest. В сдаваемом Deployment оставлен образ из условия, а для локального прогона в Minikube я переключал live Deployment на amd64 digest:
 
 ```bash
 kubectl -n scaletest set image deployment/scaletestapp \
