@@ -1,0 +1,8 @@
+# Memory HPA before load
+2026-10-05T18:16:40Z
+NAME                  REFERENCE                 TARGETS           MINPODS   MAXPODS   REPLICAS   AGE
+scaletestapp-memory   Deployment/scaletestapp   memory: 59%/80%   1         10        1          5m48s
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+scaletestapp   1/1     1            1           5m48s
+NAME                            CPU(cores)   MEMORY(bytes)   
+scaletestapp-57f4f8b89f-5284x   1m           11Mi            

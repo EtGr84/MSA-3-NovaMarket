@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: scaletestapp
+  namespace: scaletest
+  labels:
+    app.kubernetes.io/name: scaletestapp
+    app.kubernetes.io/part-of: novamarket
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "8080"
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: scaletestapp
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP

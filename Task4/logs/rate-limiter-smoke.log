@@ -1,0 +1,18 @@
+# Smoke checks for rate limiter
+2026-10-05T18:40:12Z
+HTTP/1.1 200 OK
+Server: nginx/1.29.8
+Date: Tue, 05 Oct 2026 18:40:12 GMT
+Content-Type: application/json
+Content-Length: 78
+Connection: keep-alive
+
+{"status":"success","service":"web_backend","data":"Web application response"}
+HTTP/1.1 200 OK
+Server: nginx/1.29.8
+Date: Tue, 05 Oct 2026 18:40:12 GMT
+Content-Type: application/json
+Content-Length: 84
+Connection: keep-alive
+
+{"status":"success","service":"mobile_backend","data":"Mobile application response"}

@@ -1,0 +1,26 @@
+# Environment notes
+2026-10-05T18:28:31Z
+## minikube
+minikube version: v1.38.1
+commit: c93a4cb9311efc66b90d33ef03f75f2c4120e9b0
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
+## node architecture
+NAME       STATUS   ROLES           AGE    VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION     CONTAINER-RUNTIME
+minikube   Ready    control-plane   7d7h   v1.35.1   192.168.49.2   <none>        Debian GNU/Linux 12 (bookworm)   6.12.76-linuxkit   docker://29.2.1
+## required image manifest
+{
+  "architecture": "amd64",
+  "os": "linux"
+}
+{
+  "architecture": "unknown",
+  "os": "unknown"
+}
+## live image used for local Apple Silicon verification
+ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71838952b90dee42a5b26b052e92793452

@@ -1,0 +1,131 @@
+# Prometheus metric check after adapter fix
+2026-10-05T18:27:40Z
+## Targets containing scaletestapp
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.49:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-c7vrr",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.53:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-dwgx2",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.57:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-tr22v",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.52:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-m5gw9",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.55:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-j4mb4",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.40:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-5284x",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.50:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-8wml4",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.51:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-ntm5j",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "unknown",
+  "scrapeUrl": "http://10.244.0.56:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-trzmz",
+    "job": "kubernetes-pods"
+  }
+}
+{
+  "health": "up",
+  "scrapeUrl": "http://10.244.0.54:8080/metrics",
+  "labels": {
+    "namespace": "scaletest",
+    "pod": "scaletestapp-57f4f8b89f-mz7bv",
+    "job": "kubernetes-pods"
+  }
+}
+## Query: sum(rate(http_requests_total{namespace="scaletest",pod!=""}[5m])) by (pod)
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "pod": "scaletestapp-57f4f8b89f-5284x"
+        },
+        "value": [
+          1778005663.128,
+          "284.1423204818909"
+        ]
+      }
+    ]
+  }
+}
+## Custom metric via Kubernetes API
+{
+  "kind": "MetricValueList",
+  "apiVersion": "custom.metrics.k8s.io/v1beta1",
+  "metadata": {},
+  "items": [
+    {
+      "describedObject": {
+        "kind": "Pod",
+        "namespace": "scaletest",
+        "name": "scaletestapp-57f4f8b89f-5284x",
+        "apiVersion": "/v1"
+      },
+      "metricName": "http_requests_per_second",
+      "timestamp": "2026-10-05T18:27:43Z",
+      "value": "284184m",
+      "selector": null
+    }
+  ]
+}

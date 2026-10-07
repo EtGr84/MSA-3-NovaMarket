@@ -1,0 +1,116 @@
+# RPS HPA scaled state
+2026-10-05T18:27:05Z
+NAME               REFERENCE                 TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
+scaletestapp-rps   Deployment/scaletestapp   219847m/5   1         10        5          3m26s
+Name:                                  scaletestapp-rps
+Namespace:                             scaletest
+Labels:                                <none>
+Annotations:                           <none>
+CreationTimestamp:                     Tue, 05 Oct 2026 21:23:39 +0300
+Reference:                             Deployment/scaletestapp
+Metrics:                               ( current / target )
+  "http_requests_per_second" on pods:  219847m / 5
+Min replicas:                          1
+Max replicas:                          10
+Behavior:
+  Scale Up:
+    Stabilization Window: 0 seconds
+    Select Policy: Max
+    Policies:
+      - Type: Percent  Value: 200  Period: 30 seconds
+      - Type: Pods     Value: 4    Period: 30 seconds
+  Scale Down:
+    Stabilization Window: 180 seconds
+    Select Policy: Max
+    Policies:
+      - Type: Percent  Value: 50  Period: 60 seconds
+Deployment pods:       5 current / 5 desired
+Conditions:
+  Type            Status  Reason            Message
+  ----            ------  ------            -------
+  AbleToScale     True    ReadyForNewScale  recommended size matches current size
+  ScalingActive   True    ValidMetricFound  the HPA was able to successfully calculate a replica count from pods metric http_requests_per_second
+  ScalingLimited  True    ScaleUpLimit      the desired replica count is increasing faster than the maximum scale rate
+Events:
+  Type     Reason                        Age                   From                       Message
+  ----     ------                        ----                  ----                       -------
+  Warning  FailedGetPodsMetric           41s (x11 over 3m11s)  horizontal-pod-autoscaler  unable to get metric http_requests_per_second: no metrics returned from custom metrics API
+  Warning  FailedComputeMetricsReplicas  41s (x11 over 3m11s)  horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get pods metric value: unable to get metric http_requests_per_second: no metrics returned from custom metrics API
+  Normal   SuccessfulRescale             26s                   horizontal-pod-autoscaler  New size: 5; reason: pods metric http_requests_per_second above target
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+scaletestapp   5/5     5            5           16m
+NAME                            READY   STATUS    RESTARTS        AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+scaletestapp-57f4f8b89f-5284x   1/1     Running   1 (8m49s ago)   12m   10.244.0.40   minikube   <none>           <none>
+scaletestapp-57f4f8b89f-8wml4   1/1     Running   0               26s   10.244.0.50   minikube   <none>           <none>
+scaletestapp-57f4f8b89f-c7vrr   1/1     Running   0               26s   10.244.0.49   minikube   <none>           <none>
+scaletestapp-57f4f8b89f-m5gw9   1/1     Running   0               26s   10.244.0.52   minikube   <none>           <none>
+scaletestapp-57f4f8b89f-ntm5j   1/1     Running   0               26s   10.244.0.51   minikube   <none>           <none>
+## custom metric from Kubernetes API
+{
+  "kind": "MetricValueList",
+  "apiVersion": "custom.metrics.k8s.io/v1beta1",
+  "metadata": {},
+  "items": [
+    {
+      "describedObject": {
+        "kind": "Pod",
+        "namespace": "scaletest",
+        "name": "scaletestapp-57f4f8b89f-5284x",
+        "apiVersion": "/v1"
+      },
+      "metricName": "http_requests_per_second",
+      "timestamp": "2026-10-05T18:27:05Z",
+      "value": "228142m",
+      "selector": null
+    }
+  ]
+}
+## Prometheus 5m query
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "pod": "scaletestapp-57f4f8b89f-5284x"
+        },
+        "value": [
+          1778005625.822,
+          "228.1536255857688"
+        ]
+      }
+    ]
+  }
+}
+# Recent scale events
+6m53s       Normal    ScalingReplicaSet              deployment/scaletestapp                       Scaled down replica set scaletestapp-57f4f8b89f from 2 to 1
+3m19s       Normal    Scheduled                      pod/rps-load                                  Successfully assigned scaletest/rps-load to minikube
+3m19s       Normal    Pulling                        pod/rps-load                                  Pulling image "curlimages/curl:8.17.0"
+3m12s       Normal    Started                        pod/rps-load                                  Container started
+3m12s       Normal    Created                        pod/rps-load                                  Container created
+3m12s       Normal    Pulled                         pod/rps-load                                  Successfully pulled image "curlimages/curl:8.17.0" in 6.7s (6.7s including waiting). Image size: 24491414 bytes.
+41s         Warning   FailedGetPodsMetric            horizontalpodautoscaler/scaletestapp-rps      unable to get metric http_requests_per_second: no metrics returned from custom metrics API
+41s         Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/scaletestapp-rps      invalid metrics (1 invalid out of 1), first error is: failed to get pods metric value: unable to get metric http_requests_per_second: no metrics returned from custom metrics API
+25s         Normal    Scheduled                      pod/scaletestapp-57f4f8b89f-ntm5j             Successfully assigned scaletest/scaletestapp-57f4f8b89f-ntm5j to minikube
+25s         Normal    Scheduled                      pod/scaletestapp-57f4f8b89f-c7vrr             Successfully assigned scaletest/scaletestapp-57f4f8b89f-c7vrr to minikube
+26s         Normal    SuccessfulCreate               replicaset/scaletestapp-57f4f8b89f            Created pod: scaletestapp-57f4f8b89f-ntm5j
+26s         Normal    SuccessfulCreate               replicaset/scaletestapp-57f4f8b89f            Created pod: scaletestapp-57f4f8b89f-m5gw9
+26s         Normal    SuccessfulCreate               replicaset/scaletestapp-57f4f8b89f            Created pod: scaletestapp-57f4f8b89f-c7vrr
+26s         Normal    ScalingReplicaSet              deployment/scaletestapp                       Scaled up replica set scaletestapp-57f4f8b89f from 1 to 5
+25s         Normal    Scheduled                      pod/scaletestapp-57f4f8b89f-8wml4             Successfully assigned scaletest/scaletestapp-57f4f8b89f-8wml4 to minikube
+26s         Normal    SuccessfulCreate               replicaset/scaletestapp-57f4f8b89f            Created pod: scaletestapp-57f4f8b89f-8wml4
+26s         Normal    SuccessfulRescale              horizontalpodautoscaler/scaletestapp-rps      New size: 5; reason: pods metric http_requests_per_second above target
+25s         Normal    Scheduled                      pod/scaletestapp-57f4f8b89f-m5gw9             Successfully assigned scaletest/scaletestapp-57f4f8b89f-m5gw9 to minikube
+25s         Normal    Pulled                         pod/scaletestapp-57f4f8b89f-m5gw9             Container image "ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71828952b90dee42a5b26b052e92793452" already present on machine and can be accessed by the pod
+25s         Normal    Created                        pod/scaletestapp-57f4f8b89f-m5gw9             Container created
+25s         Normal    Started                        pod/scaletestapp-57f4f8b89f-c7vrr             Container started
+25s         Normal    Created                        pod/scaletestapp-57f4f8b89f-c7vrr             Container created
+25s         Normal    Pulled                         pod/scaletestapp-57f4f8b89f-c7vrr             Container image "ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71828952b90dee42a5b26b052e92793452" already present on machine and can be accessed by the pod
+25s         Normal    Started                        pod/scaletestapp-57f4f8b89f-m5gw9             Container started
+25s         Normal    Pulled                         pod/scaletestapp-57f4f8b89f-ntm5j             Container image "ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71828952b90dee42a5b26b052e92793452" already present on machine and can be accessed by the pod
+25s         Normal    Started                        pod/scaletestapp-57f4f8b89f-8wml4             Container started
+25s         Normal    Created                        pod/scaletestapp-57f4f8b89f-8wml4             Container created
+25s         Normal    Pulled                         pod/scaletestapp-57f4f8b89f-8wml4             Container image "ghcr.io/yandex-practicum/scaletestapp@sha256:7273dd1ffd1c1a29a307eb299b949f71828952b90dee42a5b26b052e92793452" already present on machine and can be accessed by the pod
+25s         Normal    Created                        pod/scaletestapp-57f4f8b89f-ntm5j             Container created
+25s         Normal    Started                        pod/scaletestapp-57f4f8b89f-ntm5j             Container started
