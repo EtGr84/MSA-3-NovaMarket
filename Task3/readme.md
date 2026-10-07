@@ -1,6 +1,6 @@
-# Task3. Autoscaling under load
+# Task3. Задание 3. Масштабирование приложение под нагрузку
 
-В этой директории лежат артефакты для третьего задания:
+Списко файлов:
 
 - [deployment.yaml](deployment.yaml) - Deployment тестового приложения `ghcr.io/yandex-practicum/scaletestapp:latest` с одной стартовой репликой и лимитом памяти `30Mi`.
 - [service.yaml](service.yaml) - Service для доступа к приложению и scrape-аннотациями Prometheus.
