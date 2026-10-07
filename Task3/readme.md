@@ -6,16 +6,16 @@
 - service.yaml - Service для доступа к приложению и scrape-аннотациями Prometheus.
 - hpa-memory.yaml - HPA по утилизации памяти, целевое значение `80%`, максимум `10` реплик.
 - hpa-rps.yaml - HPA по RPS на pod через custom metric из Prometheus Adapter.
-- [prometheus-adapter-values.yaml - values для установки Prometheus Adapter с правилом `http_requests_per_second`.
+- prometheus-adapter-values.yaml - values для установки Prometheus Adapter с правилом `http_requests_per_second`.
 - locustfile.py - сценарий нагрузки для Locust.
 
 ## Проверочные логи:
 
-- logs/hpa-memory-before.log - до нагрузки: `REPLICAS = 1`.
-- logs/hpa-memory-scaled.log - HPA по памяти: событие `SuccessfulRescale`, размер изменился до `2`.
-- logs/prometheus-metrics-after-fix.log - Prometheus target `up`, PromQL возвращает RPS, custom metric доступна через Kubernetes API.
-- logs/hpa-rps-scaled.log - HPA по RPS: событие `SuccessfulRescale`, размер изменился до `5`.
-- logs/hpa-rps-final-10-replicas.log - финальное состояние RPS-прогона: Deployment `10/10`, HPA дошел до максимума `10`.
+- hpa-memory-before.log - до нагрузки: `REPLICAS = 1`.
+- hpa-memory-scaled.log - HPA по памяти: событие `SuccessfulRescale`, размер изменился до `2`.
+- prometheus-metrics-after-fix.log - Prometheus target `up`, PromQL возвращает RPS, custom metric доступна через Kubernetes API.
+- hpa-rps-scaled.log - HPA по RPS: событие `SuccessfulRescale`, размер изменился до `5`.
+- hpa-rps-final-10-replicas.log - финальное состояние RPS-прогона: Deployment `10/10`, HPA дошел до максимума `10`.
 
 ```bash
 kubectl -n scaletest set image deployment/scaletestapp \
