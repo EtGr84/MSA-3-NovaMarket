@@ -1,0 +1,37 @@
+# Circuit breaker recovery after fail_timeout=30s
+2026-10-05T19:08:22Z
+HTTP/1.1 200 OK
+Server: nginx/1.29.8
+Date: Tue, 05 Oct 2026 19:08:22 GMT
+Content-Type: application/json
+Content-Length: 65
+Connection: keep-alive
+
+{"status":"success","endpoint":"fast","message":"Quick response"}
+TIME_TOTAL=0.002995
+# Last NGINX log lines
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/fast HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /error HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/error HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /error HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/error HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /error HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /slow HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/error HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /fast HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/slow HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/fast HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /error HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /slow HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/error HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/slow HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /error HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /error HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/error HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/error HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/error HTTP/1.1" status=499 upstream_addr="127.0.0.1:9091" upstream_status="-" upstream_response_time="0.000"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /error HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+127.0.0.1 [05/Oct/2026:19:07:50 +0000] request="GET /error HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+192.168.65.1 [05/Oct/2026:19:07:50 +0000] request="GET /logistics/error HTTP/1.1" status=200 upstream_addr="127.0.0.1:9091" upstream_status="200" upstream_response_time="0.000"
+127.0.0.1 [05/Oct/2026:19:08:22 +0000] request="GET /fast HTTP/1.1" status=200 upstream_addr="-" upstream_status="-" upstream_response_time="-"
+192.168.65.1 [05/Oct/2026:19:08:22 +0000] request="GET /logistics/fast HTTP/1.1" status=200 upstream_addr="127.0.0.1:9090" upstream_status="200" upstream_response_time="0.000"
