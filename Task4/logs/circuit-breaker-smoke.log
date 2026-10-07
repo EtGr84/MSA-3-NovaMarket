@@ -1,0 +1,21 @@
+# Smoke checks for circuit breaker
+2026-10-05T18:40:59Z
+## fast endpoint
+HTTP/1.1 200 OK
+Server: nginx/1.29.8
+Date: Tue, 05 Oct 2026 18:40:59 GMT
+Content-Type: application/json
+Content-Length: 65
+Connection: keep-alive
+
+{"status":"success","endpoint":"fast","message":"Quick response"}
+## error endpoint should return fallback
+HTTP/1.1 200 OK
+Server: nginx/1.29.8
+Date: Tue, 05 Oct 2026 18:40:59 GMT
+Content-Type: application/json
+Content-Length: 107
+Connection: keep-alive
+X-Circuit-Breaker: open
+
+{"status":"fallback","service":"logistics","message":"Circuit breaker is open, fallback response returned"}
